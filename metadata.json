@@ -1,0 +1,6 @@
+{
+  "name": "n8n to GitHub Sync",
+  "description": "Automatically fetch n8n workflows and push updates to your GitHub repository with change detection, background polling, and webhook support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
