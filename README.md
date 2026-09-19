@@ -1,33 +1,26 @@
 # n8n to GitHub Sync
 
-Automatic version control, change detection, and continuous backup of
-self-hosted n8n workflows into your own GitHub repository.
+Automatically sync your self-hosted n8n workflows to a GitHub repository.
 
-Built for n8n **community edition** users who want Git-backed workflow
-history without paid plans or enterprise-only features.
+Built for the **community edition** to add continuous version control without paid plans.
 
----
+## Features
+- **Auto-Sync**: Pushes workflow changes via Webhook or background polling.
+- **Diff Viewer**: Compare live n8n JSON against your Git history.
+- **Audit Log**: Track every commit with source and timestamp.
 
-## Why this exists
+## Requirements
+- Self-hosted n8n with a **Public REST API Key**.
+- Node.js 18+ (for local hosting).
+- GitHub Personal Access Token (with `repo` scope).
 
-n8n lets you download a single workflow as JSON from the editor UI, and the
-Server CLI can export workflows in bulk — but there is no built-in way for a
-community instance to *continuously* push workflow changes into version
-control. This app closes that gap: it reads your workflows through the n8n
-public REST API and commits them to GitHub whenever they change.
-
-## How it works
-
-Two sync engines run together so nothing slips through:
-
-1. **Webhook trigger (zero latency)** — A secured endpoint
-   (`/api/webhooks/n8n`) with shared-secret auth. When you save a workflow,
-   a small companion n8n workflow calls the webhook, and the app immediately
-   fetches and commits the updated JSON. A ready-to-import trigger template
-   is included (`n8n-github-sync-trigger.json`).
-2. **Background polling daemon** — A 24/7 scheduler polls your n8n instance
-   at a configurable interval (1 min / 5 min / 15 min / 30 min / 1 hr),
-   hashes nodes and connections, and pushes only real modifications.
-
-Detected changes are committed to your chosen repo, branch, and folder
-(e.g.
+## Quick Start
+1. **Clone & Install**:
+   ```bash
+   git clone https://github.com/klipertsky/n8n-to-GitHub-Sync.git
+   cd n8n-to-GitHub-Sync
+   npm install
+2. Configure: Copy .env.example to .env and add your n8n URL, API key, and GitHub token.
+3. Run:
+   npm run dev
+   Note: n8n doesn't have a native "save" webhook. You'll need to import the included trigger workflow template to enable instant syncing.
